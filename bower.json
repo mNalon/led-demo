@@ -1,0 +1,23 @@
+{
+  "name": "led-demo",
+  "version": "1.0.0",
+  "homepage": "https://github.com/mNalon/led-demo",
+  "authors": [
+    "mNalon"
+  ],
+  "description": "A demo nodebots to be used in a lecture about BrasilJS Conf 2015",
+  "main": "index.html",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "devDependencies":{
+    "angularjs":"latest",
+    "socket.io-client":"latest",
+    "angular-socket-io":"latest"
+  }
+}

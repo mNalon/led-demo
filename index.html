@@ -1,0 +1,79 @@
+<!DOCTYPE html>  
+<html lang="en" ng-app="myApp" class="no-js"> <!--<![endif]-->  
+<head>  
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <style>
+    html,body,div{
+      width: 100%;
+      height: 100%;
+      margin: 0px;
+    }
+
+    img{
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      right: 0;
+      left: 0;
+      margin: auto;
+      width: 169px;
+      height: 220px;
+      cursor: pointer;
+    }
+
+  </style>
+</head>  
+<body>  
+  <script src="bower_components/socket.io-client/socket.io.js"></script>
+  <script src="bower_components/angularjs/angular.js"></script>  
+  <script src="bower_components/angular-socket-io/socket.js"></script>
+
+  <div ng-controller="ArduController">
+    <img ng-click="toggle()" id="bulb" src="/img/bulb-off.jpg" state="off" />
+  </div>
+
+<script type="text/javascript"> 
+    var bulb = document.getElementById("bulb");
+
+    var app = angular.module('myApp', ['btford.socket-io']).
+    factory('mySocket', function (socketFactory) {
+        return socketFactory();
+    }).
+    controller('ArduController', function ($scope,mySocket) {
+
+        $scope.ledOn = function () {
+            mySocket.emit('led:on');
+            console.log('LED ON');
+        };
+
+        $scope.ledOff = function (){
+            mySocket.emit('led:off');
+            console.log('LED OFF');  
+        };
+
+        $scope.toggle = function(){
+            if(bulb.getAttribute('state')==='on'){
+              mySocket.emit('led:off');
+              console.log('LED OFF');
+            }else{
+              mySocket.emit('led:on');
+              console.log('LED ON');
+            }
+        }
+
+        mySocket.on('state:on',function(){
+            console.log('state:on');
+            bulb.src = "/img/bulb-on.jpg"
+            bulb.setAttribute('state','on');
+        });
+
+        mySocket.on('state:off',function(){
+            console.log('state:off');
+            bulb.src = "/img/bulb-off.jpg"
+            bulb.setAttribute('state','off');
+        });
+    });
+
+</script>  
+</body>
